@@ -22,6 +22,7 @@ typedef enum {
 void show_grid(Grid* grid);
 void make_candidate_array(CandidateArray* candidate_array, Grid* grid);
 void show_candidates(CandidateArray* candidate_array);
+void init_grid_state(GridState* state, Grid* grid);
 SudokuState check_sudoku_state(Grid *grid);
 
 #endif

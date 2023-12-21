@@ -16,14 +16,17 @@ void make_candidate_array(CandidateArray* candidate_array, Grid* grid) {
         int col = cell_id % 9;
         CellVal cell_val = (*grid)[cell_id];
 
-        if (cell_val == 0) {
+        if (cell_val != 0) {
+            int cand_id = 9 * cell_id + (cell_val - 1);
+            (*candidate_array)[cand_id] = 1;
+        } else {
             // the indices for this array corresponds to the cell value
             // if the index (cell value) exists in other cells in same region, 
             // the element of this array becomes 1
             int value_check_array[10] = {0};
             int box_top_row = 3 * (row / 3);
             int box_left_col = 3 * (col / 3);
-            for (int k=0; k<9; ++k) {
+            for (int k = 0; k < 9; ++k) {
                 int same_row_cell_id = 9 * row + k;
                 CellVal same_row_cell_val = (*grid)[same_row_cell_id];
 
@@ -45,11 +48,16 @@ void make_candidate_array(CandidateArray* candidate_array, Grid* grid) {
                 int cand_id = 9 * cell_id + n;
                 (*candidate_array)[cand_id] = (uint8_t)(value_check_array[cand_val] == 0);
             }
-        } else {
-            int cand_id = 9 * cell_id + (cell_val - 1);
-            (*candidate_array)[cand_id] = 1;
         }
     }    
+}
+
+void init_grid_state(GridState* state, Grid* grid) {
+    for (int cell_id = 0; cell_id < 81; ++cell_id) {
+        CellVal cell_val = (*grid)[cell_id];
+        state->grid[cell_id] = cell_val;
+    }
+    make_candidate_array(&state->candidate_array, grid);
 }
 
 void show_candidates(CandidateArray* candidata_array) {
