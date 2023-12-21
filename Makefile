@@ -6,8 +6,8 @@ PROGRAM = sudoku
 
 all: $(PROGRAM)
 
-$(PROGRAM): src/main.c src/grid.c
-			$(CC) $(CFLAGS) -o $(PROGRAM) src/main.c src/grid.c
+$(PROGRAM): src/main.c src/grid.c src/basic_techniques.c
+			$(CC) $(CFLAGS) -o $(PROGRAM) src/main.c src/grid.c src/basic_techniques.c
 
 clean: rm -f *.o *~ $(PROGRAM)
 
