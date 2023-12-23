@@ -57,6 +57,7 @@ void init_grid_state(GridState* state, Grid* grid) {
         CellVal cell_val = (*grid)[cell_id];
         state->grid[cell_id] = cell_val;
     }
+    for (int i = 0; i < 729; ++i) state->candidate_array[i] = 0;
     make_candidate_array(&state->candidate_array, grid);
 }
 
@@ -151,14 +152,14 @@ SudokuState check_sudoku_state(Grid *grid) {
             uint8_t count = 0;
             uint8_t inbox_array[9] = {0};
 
-            for (int inbox_id = 0; inbox_id < 9; ++inbox_id) {
-                int inbox_row = inbox_id / 3;
-                int inbox_col = inbox_id % 3;
+            for (int inbox = 0; inbox < 9; ++inbox) {
+                int inbox_row = inbox / 3;
+                int inbox_col = inbox % 3;
 
                 int cell_id = 9 * (box_top_row + inbox_row) + (box_left_col + inbox_col);
                 CellVal cell_val = (*grid)[cell_id];
                 if (cell_val == val) {
-                    inbox_array[count++] = inbox_id;
+                    inbox_array[count++] = inbox;
                 }
             }
 
